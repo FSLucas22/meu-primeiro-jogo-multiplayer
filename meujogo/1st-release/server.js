@@ -1,15 +1,17 @@
 import express from 'express'
 import http from 'http'
 import createGame from './public/game.js'
-import * as IO from 'socket.io'
+import createScreen from './public/screen.js'
+import socketio from 'socket.io'
 
 const app = express()
 const server = http.createServer(app)
-const sockets = new IO.Server(server)
+const sockets = socketio(server)
 
 app.use(express.static('public'))
 
-const game = createGame()
+const screen = createScreen()
+const game = createGame(screen)
 game.start()
 
 game.subscribe((command) => {

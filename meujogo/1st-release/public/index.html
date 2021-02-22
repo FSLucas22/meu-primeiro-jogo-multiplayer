@@ -16,12 +16,23 @@
         <script src='/socket.io/socket.io.js'></script>
     </head>
     <body>
-        <canvas id="screen" width="10" height="10"></canvas>
+        <div id='canvasPlace'></div>
         <script type="module">
             import createGame from './game.js'
             import createKeyboardListener from './keyboard-listener.js'
             import renderScreen from './render-screen.js'
             
+
+            <canvas id="screen" width="10" height="10"></canvas>
+
+            function createCanvas(canvas) {
+                document.getElementById('canvasPlace').innerHTML = canvasHTML(canvas)
+            }
+
+            function canvasHTML(canvas) {
+                return `<canvas id="${canvas.id}" width="${canvas.width}" height="${canvas.height}"></canvas>`
+            }
+
             const game = createGame()
             const keyboardListener = createKeyboardListener(document)
 
@@ -37,6 +48,7 @@
 
             socket.on('setup', (state) => {
                 const playerId = socket.id
+                createCanvas(state.screen)
                 game.setState(state)
                 
                 keyboardListener.registerPlayerId(playerId)

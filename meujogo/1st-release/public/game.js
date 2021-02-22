@@ -1,11 +1,8 @@
-export default function createGame() {
+export default function createGame(screenObject) {
     const state = {
         players: {},
         fruits: {},
-        screen: {
-            width: 10,
-            height: 10
-        }
+        screen: screenObject
     }
 
     const observers = []
